@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3d slider</title>
+  <style>
+    .slider {
+      position: relative;
+      width: 1000px;
+      height: 500px;
+      margin: 100px auto;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .slider-item {
+      position: absolute;
+      box-shadow: 10px 20px 10px #666;
+      transition: all 0.6s linear;
+    }
+
+    .slider-item.first {
+      z-index: 3;
+      width: 600px;
+      transform: translate3d(200px, 80px, 0);
+    }
+
+    .slider-item.second {
+      z-index: 2;
+      width: 400px;
+      opacity: 0.6;
+    }
+
+    .slider-item.second.right {
+      transform: translate3d(600px, 135px, 0);
+    }
+
+    .slider-item.second.left {
+      transform: translate3d(0, 135px, 0);
+    }
+
+    .slider-item.third {
+      z-index: 1;
+      width: 300px;
+      opacity: 0.4;
+      transform: translate3d(350px, 50px, 0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="slider">
+      <div class="slider-item first"><img src="./assets/1.jfif" alt=""></div>
+      <div class="slider-item second right"><img src="./assets/2.jfif" alt=""></div>
+      <div class="slider-item third"><img src="./assets/3.jfif" alt=""></div>
+      <div class="slider-item second left"><img src="./assets/4.jfif" alt=""></div>
+    </div>
+  </div>
+
+  <script>
+    const oSliderItems = document.querySelectorAll('.slider-item'),
+      classNames = [];
+
+    let t = null;
+
+    const init = () => {
+      collectClassNames()
+      sliderAction()
+    }
+
+    function collectClassNames() {
+      let oSliderItem = null;
+      for (let i = 0; i < oSliderItems.length; i++) {
+        oSliderItem = oSliderItems[i];
+        classNames.push(oSliderItem.className)
+      }
+    }
+
+    function setClassName() {
+      classNames.unshift(classNames.pop())
+      render()
+    }
+
+    function sliderAction() {
+      t = setInterval(setClassName, 1000)
+    }
+
+    function render() {
+      let oSliderItem = null;
+      for (let i = 0; i < oSliderItems.length; i++) {
+        oSliderItem = oSliderItems[i]
+        oSliderItem.className = classNames[i]
+      }
+    }
+
+    init();
+  </script>
+</body>
+
+</html>
